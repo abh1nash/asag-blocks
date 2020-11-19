@@ -1,0 +1,40 @@
+/**
+ * #.# Common SCSS
+ *
+ * Can include things like variables and mixins
+ * that are used across the project.
+*/
+.container-wrapper {
+  padding: 15px; }
+  .container-wrapper .editor-container-display {
+    width: 1170px;
+    max-width: 100%;
+    margin: 0 auto; }
+
+.cta-btn {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #fff;
+  background: #dfb544;
+  text-transform: uppercase;
+  padding: 10px;
+  border-radius: 5px;
+  margin-top: 15px; }
+
+/**
+ * #.# Styles
+ *
+ * CSS for both Frontend+Backend.
+ */
+.atf-hero {
+  height: 20em; }
+  @media (min-width: 992px) {
+    .atf-hero {
+      height: 25em;
+      background: -webkit-gradient(linear, left top, right top, color-stop(30%, white), color-stop(90%, rgba(255, 255, 255, 0))), var(--bg-img);
+      background: -webkit-linear-gradient(left, white 30%, rgba(255, 255, 255, 0) 90%), var(--bg-img);
+      background: -o-linear-gradient(left, white 30%, rgba(255, 255, 255, 0) 90%), var(--bg-img);
+      background: linear-gradient(to right, white 30%, rgba(255, 255, 255, 0) 90%), var(--bg-img);
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center; } }

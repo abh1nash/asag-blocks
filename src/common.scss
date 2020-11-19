@@ -1,0 +1,44 @@
+/**
+ * #.# Common SCSS
+ *
+ * Can include things like variables and mixins
+ * that are used across the project.
+*/
+
+// Colors.
+$primary: #11b0a3;
+$secondary: #1a6070;
+$accent: #dfb544;
+$nav-color: #deefef;
+$dark: #303030;
+$altLight: rgba(25, 250, 180, 0.15);
+
+$dark-blue: #253e53;
+
+$shadow: rgba(0, 0, 0, 0.15);
+
+$success: #00b0a6;
+$danger: #db3a34;
+$red-1: #fbd3c9;
+$info: #3992ac;
+$warning: #d6a454;
+
+.container-wrapper {
+	padding: 15px;
+	.editor-container-display {
+		width: 1170px;
+		max-width: 100%;
+		margin: 0 auto;
+	}
+}
+
+.cta-btn {
+	font-size: 1.2em;
+	font-weight: bold;
+	color: #fff;
+	background: $accent;
+	text-transform: uppercase;
+	padding: 10px;
+	border-radius: 5px;
+	margin-top: 15px;
+}
