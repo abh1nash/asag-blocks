@@ -12,3 +12,4 @@
 import "./pageHeader";
 import "./containerBlock";
 import "./ctaBtn";
+import "./alert";

@@ -1,0 +1,60 @@
+$background-shift: -80%;
+$border-shift: -70%;
+$color-shift: 40%;
+
+@function tint-color($color, $weight) {
+	@return mix(white, $color, $weight);
+}
+
+@function shade-color($color, $weight) {
+	@return mix(black, $color, $weight);
+}
+
+@function shift-color($color, $weight) {
+	@return if(
+		$weight > 0,
+		shade-color($color, $weight),
+		tint-color($color, -$weight)
+	);
+}
+
+.editor-alert {
+	position: relative;
+	padding: 0.75rem 1.25rem;
+	margin-bottom: 1rem;
+	border: 1px solid transparent;
+	border-radius: 0.25rem;
+
+	&.editor-alert-type- {
+		&primary {
+			background: shift-color($primary, $background-shift);
+			border-color: shift-color($primary, $color-shift);
+			color: shift-color($primary, $border-shift);
+		}
+		&secondary {
+			background: shift-color($secondary, $background-shift);
+			border-color: shift-color($secondary, $color-shift);
+			color: shift-color($secondary, $border-shift);
+		}
+		&accent {
+			background: shift-color($accent, $background-shift);
+			border-color: shift-color($accent, $color-shift);
+			color: shift-color($accent, $border-shift);
+		}
+		&success {
+			background: shift-color($success, $background-shift);
+			border-color: shift-color($success, $color-shift);
+			color: shift-color($success, $border-shift);
+		}
+		&danger {
+			background: shift-color($danger, $background-shift);
+			border-color: shift-color($danger, $color-shift);
+			color: shift-color($danger, $border-shift);
+		}
+		&warning {
+			background: shift-color($warning, $background-shift);
+			border-color: shift-color($warning, $color-shift);
+			color: shift-color($warning, $border-shift);
+		}
+	}
+}

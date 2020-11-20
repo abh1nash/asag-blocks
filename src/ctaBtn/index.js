@@ -8,6 +8,7 @@ import {
 	PanelRow,
 	ColorPalette,
 } from "@wordpress/components";
+import colors from "../colors.json";
 
 registerBlockType("abhinash/cta-btn", {
 	title: __("Click-To-Action Button"), // Block title.
@@ -40,13 +41,6 @@ registerBlockType("abhinash/cta-btn", {
 		const handleBtnTxt = (value) => {
 			props.setAttributes({ btnTxt: value });
 		};
-		const colors = [
-			{ name: "Primary", color: "#11b0a3" },
-			{ name: "Secondary", color: "#1a6070" },
-			{ name: "Tertiary", color: "#253e53" },
-			{ name: "Accent", color: "#dfb544" },
-			{ name: "Light", color: "#fefefe" },
-		];
 		return (
 			<div className={"text-" + props.attributes.align}>
 				{
