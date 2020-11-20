@@ -8,6 +8,7 @@
  * Author URI: https://abhinash.net/
  * License: GPL2+
  * License URI: https://www.gnu.org/licenses/gpl-2.0.txt
+ * GitHub Plugin URI: https://github.com/abh1nash/asag-blocks
  *
  * @package ASAG
  */
