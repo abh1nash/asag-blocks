@@ -28,33 +28,33 @@ $color-shift: 40%;
 	&.editor-alert-type- {
 		&primary {
 			background: shift-color($primary, $background-shift);
-			border-color: shift-color($primary, $color-shift);
-			color: shift-color($primary, $border-shift);
+			border-color: shift-color($primary, $border-shift);
+			color: shift-color($primary, $color-shift);
 		}
 		&secondary {
 			background: shift-color($secondary, $background-shift);
-			border-color: shift-color($secondary, $color-shift);
-			color: shift-color($secondary, $border-shift);
+			border-color: shift-color($secondary, $border-shift);
+			color: shift-color($secondary, $color-shift);
 		}
 		&accent {
 			background: shift-color($accent, $background-shift);
-			border-color: shift-color($accent, $color-shift);
-			color: shift-color($accent, $border-shift);
+			border-color: shift-color($accent, $border-shift);
+			color: shift-color($accent, $color-shift);
 		}
 		&success {
 			background: shift-color($success, $background-shift);
-			border-color: shift-color($success, $color-shift);
-			color: shift-color($success, $border-shift);
+			border-color: shift-color($success, $border-shift);
+			color: shift-color($success, $color-shift);
 		}
 		&danger {
 			background: shift-color($danger, $background-shift);
-			border-color: shift-color($danger, $color-shift);
-			color: shift-color($danger, $border-shift);
+			border-color: shift-color($danger, $border-shift);
+			color: shift-color($danger, $color-shift);
 		}
 		&warning {
 			background: shift-color($warning, $background-shift);
-			border-color: shift-color($warning, $color-shift);
-			color: shift-color($warning, $border-shift);
+			border-color: shift-color($warning, $border-shift);
+			color: shift-color($warning, $color-shift);
 		}
 	}
 }
