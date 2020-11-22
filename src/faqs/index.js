@@ -2,6 +2,10 @@ const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
 
 import shortid from "shortid";
+shortid.characters(
+	"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890_-"
+);
+
 import { RichText, InspectorControls } from "@wordpress/block-editor";
 import {
 	__experimentalNumberControl as NumberControl,
@@ -21,31 +25,32 @@ registerBlockType("abhinash/faqs", {
 
 	attributes: {
 		questions: { type: "array", default: [] },
-		answers: { type: "array", default: [], source: "html", multiline: "p" },
-		questionsCount: { type: "number" },
 		schema: { type: "string" },
+		containerId: { type: "string" },
 	},
 
 	edit: ({ attributes, setAttributes }) => {
-		let { questionsCount } = attributes;
 		const setQuestionsCount = (value) => {
-			setAttributes({ questionsCount: value });
+			setAttributes({
+				containerId: `container-${shortid.generate()}`,
+			});
 			if (attributes.questions.length <= value) {
 				while (attributes.questions.length <= value) {
 					let updatedQuestions = attributes.questions;
-					let updatedAnswers = attributes.answers;
-					updatedQuestions.push("");
-					updatedAnswers.push("");
-					setAttributes({ questions: updatedQuestions });
+					let qid = shortid.generate();
+					updatedQuestions.push({ q: "", a: "", id: qid });
+					setAttributes({
+						questions: updatedQuestions,
+					});
 				}
 			}
 			if (attributes.questions.length > value) {
 				while (attributes.questions.length > value) {
 					let updatedQuestions = attributes.questions;
-					let updatedAnswers = attributes.answers;
 					updatedQuestions.pop();
-					updatedAnswers.pop();
-					setAttributes({ questions: updatedQuestions });
+					setAttributes({
+						questions: updatedQuestions,
+					});
 				}
 			}
 		};
@@ -65,21 +70,20 @@ registerBlockType("abhinash/faqs", {
 					},
 				};
 			};
-			attributes.questions.forEach((ques, index) => {
-				schema.mainEntity.push(quesEntity(ques, attributes.answers[index]));
+			attributes.questions.forEach((entry) => {
+				schema.mainEntity.push(quesEntity(entry.q, entry.a));
 			});
 			setAttributes({ schema: JSON.stringify(schema) });
 		};
 		const setQuestion = (index, value, answer = false) => {
 			let updatedQuestions = [...attributes.questions];
-			let updatedAnswers = answer ? [...attributes.answers] : null;
 			if (answer) {
-				updatedAnswers[index] = value;
-				setAttributes({ answers: updatedAnswers });
+				updatedQuestions[index].a = value;
+				// setAttributes({ questions: updatedQuestions });
 			} else {
-				updatedQuestions[index] = value;
-				setAttributes({ questions: updatedQuestions });
+				updatedQuestions[index].q = value;
 			}
+			setAttributes({ questions: updatedQuestions });
 			generateSchema();
 		};
 
@@ -96,7 +100,7 @@ registerBlockType("abhinash/faqs", {
 								<PanelRow>
 									<NumberControl
 										label="No. of Questions"
-										value={questionsCount}
+										value={attributes.questions.length}
 										onChange={setQuestionsCount}
 									/>
 								</PanelRow>
@@ -104,79 +108,73 @@ registerBlockType("abhinash/faqs", {
 						</Panel>
 					</InspectorControls>
 				}
-				{(!questionsCount || questionsCount === "0") && (
+				{attributes.questions.length < 1 && (
 					<div className="editor-placeholder-text">
 						Start adding FAQs by setting the value for number of questions
 						through the sidebar <b>Settings</b>.
 					</div>
 				)}
 				<div className="editor-faqs-list">
-					{questionsCount &&
-						Array(questionsCount - 1 + 1)
-							.fill(0)
-							.map((_, index) => {
-								return (
-									<div className="editor-faq-item">
-										<div className="editor-faq-header">
-											<RichText
-												value={attributes.questions[index]}
-												onChange={(value) => setQuestion(index, value)}
-												placeholder="Type question here..."
-											/>
-										</div>
-										<div className="editor-faq-expand-item">
-											<RichText
-												value={attributes.answers[index]}
-												onChange={(value) => setQuestion(index, value, true)}
-												placeholder="Type answer here..."
-												selector="p"
-											/>
-										</div>
+					{attributes.questions.length > 0 &&
+						attributes.questions.map((question, index) => {
+							return (
+								<div className="editor-faq-item">
+									<div className="editor-faq-header">
+										<RichText
+											value={question.q}
+											onChange={(value) => setQuestion(index, value)}
+											placeholder="Type question here..."
+										/>
 									</div>
-								);
-							})}
+									<div className="editor-faq-expand-item">
+										<RichText
+											value={question.a}
+											onChange={(value) => setQuestion(index, value, true)}
+											placeholder="Type answer here..."
+											selector="p"
+										/>
+									</div>
+								</div>
+							);
+						})}
 				</div>
 			</div>
 		);
 	},
 
 	save: ({ attributes }) => {
-		shortid.characters(
-			"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890_-"
-		);
-		const containerId = "container-" + shortid.generate();
 		return (
 			<div>
 				<script type="application/ld+json">{attributes.schema}</script>
-				<div className="accordion my-3" id={containerId}>
-					{attributes.questions.map((question, index) => {
-						const qid = "q" + shortid.generate();
+				<div className="accordion my-3" id={attributes.containerId}>
+					{attributes.questions.map((question) => {
+						const { q, a, id } = question;
 						return (
-							<div className="card" key={qid}>
-								<div className="card-header text-left" id={`heading-${qid}`}>
+							<div className="card">
+								<div className="card-header text-left" id={`heading-${id}`}>
 									<h2 className="mb-0">
 										<button
 											className="btn btn-link text-left collapsed"
 											type="button"
 											data-toggle="collapse"
-											data-target={`#${qid}`}
+											data-target={`#${id}`}
 											aria-expanded="false"
-											aria-controls={qid}
+											aria-controls={id}
 										>
-											{question}
+											{q}
 										</button>
 									</h2>
 								</div>
 								<div
-									id={qid}
+									id={id}
 									className="hide collapse"
-									aria-labelledby={`heading-${qid}`}
-									data-parent={"#" + containerId}
+									aria-labelledby={`heading-${id}`}
+									data-parent={"#" + attributes.containerId}
 								>
 									<div
 										className="card-body text-dark"
 										dangerouslySetInnerHTML={{
-											__html: attributes.answers[index],
+											__html: a,
 										}}
 									></div>
 								</div>
