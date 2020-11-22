@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "bootstrap": "^4.5.3",
-    "cgb-scripts": "1.23.1"
+    "cgb-scripts": "1.23.1",
+    "shortid": "^2.2.16"
   }
 }
