@@ -37,7 +37,7 @@ registerBlockType("abhinash/faqs", {
 			if (attributes.questions.length <= value) {
 				while (attributes.questions.length <= value) {
 					let updatedQuestions = attributes.questions;
-					let qid = shortid.generate();
+					let qid = "q-" + shortid.generate();
 					updatedQuestions.push({ q: "", a: "", id: qid });
 					setAttributes({
 						questions: updatedQuestions,
