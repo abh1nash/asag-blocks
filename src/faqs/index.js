@@ -23,6 +23,7 @@ registerBlockType("abhinash/faqs", {
 		questions: { type: "array", default: [] },
 		answers: { type: "array", default: [], source: "html", multiline: "p" },
 		questionsCount: { type: "number" },
+		schema: { type: "string" },
 	},
 
 	edit: ({ attributes, setAttributes }) => {
@@ -48,6 +49,27 @@ registerBlockType("abhinash/faqs", {
 				}
 			}
 		};
+		const generateSchema = () => {
+			const schema = {
+				"@context": "https://schema.org",
+				"@type": "FAQPage",
+				mainEntity: [],
+			};
+			const quesEntity = (q, a) => {
+				return {
+					"@type": "Question",
+					name: q,
+					acceptedAnswer: {
+						"@type": "Answer",
+						text: a,
+					},
+				};
+			};
+			attributes.questions.forEach((ques, index) => {
+				schema.mainEntity.push(quesEntity(ques, attributes.answers[index]));
+			});
+			setAttributes({ schema: JSON.stringify(schema) });
+		};
 		const setQuestion = (index, value, answer = false) => {
 			let updatedQuestions = [...attributes.questions];
 			let updatedAnswers = answer ? [...attributes.answers] : null;
@@ -58,6 +80,7 @@ registerBlockType("abhinash/faqs", {
 				updatedQuestions[index] = value;
 				setAttributes({ questions: updatedQuestions });
 			}
+			generateSchema();
 		};
 
 		return (
@@ -123,41 +146,44 @@ registerBlockType("abhinash/faqs", {
 		);
 		const containerId = "container-" + shortid.generate();
 		return (
-			<div className="accordion my-3" id={containerId}>
-				{attributes.questions.map((question, index) => {
-					const qid = "q" + shortid.generate();
-					return (
-						<div className="card" key={qid}>
-							<div className="card-header text-left" id={`heading-${qid}`}>
-								<h2 className="mb-0">
-									<button
-										className="btn btn-link text-left collapsed"
-										type="button"
-										data-toggle="collapse"
-										data-target={`#${qid}`}
-										aria-expanded="false"
-										aria-controls={qid}
-									>
-										{question}
-									</button>
-								</h2>
-							</div>
-							<div
-								id={qid}
-								className="hide collapse"
-								aria-labelledby={`heading-${qid}`}
-								data-parent={"#" + containerId}
-							>
+			<div>
+				<script type="application/ld+json">{attributes.schema}</script>
+				<div className="accordion my-3" id={containerId}>
+					{attributes.questions.map((question, index) => {
+						const qid = "q" + shortid.generate();
+						return (
+							<div className="card" key={qid}>
+								<div className="card-header text-left" id={`heading-${qid}`}>
+									<h2 className="mb-0">
+										<button
+											className="btn btn-link text-left collapsed"
+											type="button"
+											data-toggle="collapse"
+											data-target={`#${qid}`}
+											aria-expanded="false"
+											aria-controls={qid}
+										>
+											{question}
+										</button>
+									</h2>
+								</div>
 								<div
-									className="card-body text-dark"
-									dangerouslySetInnerHTML={{
-										__html: attributes.answers[index],
-									}}
-								></div>
+									id={qid}
+									className="hide collapse"
+									aria-labelledby={`heading-${qid}`}
+									data-parent={"#" + containerId}
+								>
+									<div
+										className="card-body text-dark"
+										dangerouslySetInnerHTML={{
+											__html: attributes.answers[index],
+										}}
+									></div>
+								</div>
 							</div>
-						</div>
-					);
-				})}
+						);
+					})}
+				</div>
 			</div>
 		);
 	},
