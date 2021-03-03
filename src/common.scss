@@ -47,3 +47,10 @@ $warning: #d6a454;
 	color: rgba(0, 0, 0, 0.3);
 	font-size: 1.3em;
 }
+
+.wp-block {
+	&.is-reusable {
+		max-width: none;
+		width: 100%;
+	}
+}

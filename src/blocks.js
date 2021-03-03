@@ -10,6 +10,7 @@
  */
 
 import "./pageHeader";
+import "./pageHeaderTour";
 import "./containerBlock";
 import "./ctaBtn";
 import "./alert";
