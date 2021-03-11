@@ -13,5 +13,6 @@ import "./pageHeader";
 import "./pageHeaderTour";
 import "./containerBlock";
 import "./ctaBtn";
+import "./videoSection";
 import "./alert";
 import "./faqs";
