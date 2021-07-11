@@ -16,3 +16,4 @@ import "./ctaBtn";
 import "./videoSection";
 import "./alert";
 import "./faqs";
+import "./accordion";
