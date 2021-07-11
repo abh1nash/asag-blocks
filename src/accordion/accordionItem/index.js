@@ -17,7 +17,6 @@ registerBlockType("abhinash/accordion-item", {
 	title: "Accordion Item",
 	parent: ["abhinash/accordion"],
 	category: "abhinash",
-	parent: "abhinash/accordion",
 	icon: "arrow-down-alt2",
 	keywords: [__("accordion"), __("item"), __("entry")],
 

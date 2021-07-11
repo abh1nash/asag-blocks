@@ -22,6 +22,7 @@ registerBlockType("abhinash/accordion", {
 	title: "Accordion",
 	category: "abhinash",
 	icon: "arrow-down-alt2",
+	children: ["abhinash/accordion-item"],
 	keywords: [__("faqs"), __("accordion"), __("frequently asked questions")],
 	supports: {
 		align: ["full"],
@@ -115,11 +116,13 @@ registerBlockType("abhinash/accordion", {
 	},
 	save({ attributes }) {
 		return (
-			<div class="accordion" id={attributes.containerId}>
+			<div>
 				{!!attributes.generateFAQSchema && (
 					<script type="application/ld+json">{attributes.faqSchema}</script>
 				)}
-				<InnerBlocks.Content></InnerBlocks.Content>
+				<div class="accordion" id={attributes.containerId}>
+					<InnerBlocks.Content></InnerBlocks.Content>
+				</div>
 			</div>
 		);
 	},
