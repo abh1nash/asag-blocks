@@ -17,3 +17,5 @@ import "./videoSection";
 import "./alert";
 import "./faqs";
 import "./accordion";
+import "./guideForm";
+import "./tourModal";
