@@ -8,6 +8,7 @@ import {
 	PanelBody,
 	PanelRow,
 	ColorPalette,
+	ToggleControl,
 } from "@wordpress/components";
 import colors from "../colors.json";
 
@@ -21,6 +22,7 @@ registerBlockType("abhinash/container", {
 	attributes: {
 		bgColor: { type: "string" },
 		textColor: { type: "string" },
+		containsFAQSchema: { type: "boolean" },
 		align: {
 			type: "string",
 			default: "full",
@@ -63,6 +65,17 @@ registerBlockType("abhinash/container", {
 									/>
 								</PanelRow>
 							</PanelBody>
+							<PanelBody title="SEO" icon="admin-site-alt2" initialOpen={false}>
+								<ToggleControl
+									checked={props.attributes.containsFAQSchema}
+									onChange={() => {
+										props.setAttributes({
+											containsFAQSchema: !props.attributes.containsFAQSchema,
+										});
+									}}
+									label="Contains FAQ"
+								></ToggleControl>
+							</PanelBody>
 						</Panel>
 					</InspectorControls>
 				}{" "}
@@ -81,6 +94,9 @@ registerBlockType("abhinash/container", {
 		);
 	},
 	save: (props) => {
+		const schemaContext = props.attributes.containsFAQSchema
+			? { itemscope: "", itemtype: "https://schema.org/FAQPage" }
+			: {};
 		return (
 			<div
 				className={props.className}
@@ -88,6 +104,7 @@ registerBlockType("abhinash/container", {
 					backgroundColor: props.attributes.bgColor,
 					color: props.attributes.textColor,
 				}}
+				{...schemaContext}
 			>
 				<div className="container">
 					<InnerBlocks.Content />

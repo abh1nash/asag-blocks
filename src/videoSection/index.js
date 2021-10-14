@@ -11,6 +11,7 @@ import {
 	PanelBody,
 	PanelRow,
 	TextControl,
+	ToggleControl,
 	Button,
 } from "@wordpress/components";
 import shortid from "shortid";
@@ -28,6 +29,7 @@ registerBlockType("abhinash/video-section", {
 		videoTitle: { type: "string" },
 		videoId: { type: "string" },
 		imageObj: { type: "object" },
+		lazyLoad: { type: "boolean" },
 	},
 	edit({ attributes, setAttributes }) {
 		if (!attributes.videoId) setAttributes({ videoId: shortid.generate() });
@@ -96,6 +98,16 @@ registerBlockType("abhinash/video-section", {
 									label="Video Embed URL"
 								></TextControl>
 							</PanelRow>
+
+							<PanelRow>
+								<ToggleControl
+									label="Lazy Load"
+									checked={attributes.lazyLoad}
+									onChange={(value) => {
+										setAttributes({ lazyLoad: value });
+									}}
+								></ToggleControl>
+							</PanelRow>
 						</PanelBody>
 					</Panel>
 				</InspectorControls>
@@ -106,6 +118,9 @@ registerBlockType("abhinash/video-section", {
 		);
 	},
 	save({ attributes, className }) {
+		const lazyLoadAttrs = attributes.lazyLoad
+			? { "data-video": attributes.videoUrl }
+			: {};
 		return (
 			<div
 				className={
@@ -146,15 +161,17 @@ registerBlockType("abhinash/video-section", {
 									<span aria-hidden="true">&times;</span>
 								</button>
 							</div>
-							<div class="modal-body">
-								<iframe
-									width="100%"
-									height="315"
-									src={attributes.videoUrl}
-									frameborder="0"
-									allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-									allowfullscreen
-								></iframe>
+							<div class="modal-body" {...lazyLoadAttrs}>
+								{!attributes.lazyLoad && (
+									<iframe
+										width="100%"
+										height="315"
+										src={attributes.videoUrl}
+										frameborder="0"
+										allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+										allowfullscreen
+									></iframe>
+								)}
 							</div>
 						</div>
 					</div>

@@ -31,10 +31,12 @@ registerBlockType("abhinash/accordion", {
 	attributes: {
 		containerId: { type: "string" },
 		generateFAQSchema: { type: "boolean" },
+		parentHasFAQContext: { type: "boolean" },
 		faqSchema: { type: "string" },
 	},
 	providesContext: {
 		"abhinash/accordion": "containerId",
+		"abhinash/accordionMicrodata": "parentHasFAQContext",
 	},
 	edit({ attributes, setAttributes, clientId }) {
 		if (!attributes.containerId)
@@ -101,6 +103,13 @@ registerBlockType("abhinash/accordion", {
 									onChange={(v) => setAttributes({ generateFAQSchema: v })}
 								></ToggleControl>
 							</PanelRow>
+							<PanelRow>
+								<ToggleControl
+									label="FAQ Microdata"
+									checked={attributes.parentHasFAQContext}
+									onChange={(v) => setAttributes({ parentHasFAQContext: v })}
+								></ToggleControl>
+							</PanelRow>
 						</PanelBody>
 					</Panel>
 				</InspectorControls>
@@ -117,7 +126,7 @@ registerBlockType("abhinash/accordion", {
 	save({ attributes }) {
 		return (
 			<div>
-				{!!attributes.generateFAQSchema && (
+				{!!attributes.generateFAQSchema && !attributes.parentHasFAQContext && (
 					<script type="application/ld+json">{attributes.faqSchema}</script>
 				)}
 				<div class="accordion" id={attributes.containerId}>

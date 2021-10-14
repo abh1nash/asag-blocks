@@ -23,15 +23,17 @@ registerBlockType("abhinash/accordion-item", {
 	attributes: {
 		itemId: { type: "string" },
 		containerId: { type: "string" },
+		isMicrodataBased: { type: "boolean" },
 		head: { type: "string" },
 		isExpanded: { type: "boolean", deafult: true },
 	},
-	usesContext: ["abhinash/accordion"],
+	usesContext: ["abhinash/accordion", "abhinash/accordionMicrodata"],
 	edit({ attributes, setAttributes, clientId, context }) {
 		// const container = select('core/editor').getBlockRootClientId(clientId);
 		// console.log(container);
 		const containerId = context["abhinash/accordion"];
-		setAttributes({ containerId });
+		const isMicrodataBased = context["abhinash/accordionMicrodata"];
+		setAttributes({ containerId, isMicrodataBased });
 
 		if (!attributes.itemId) setAttributes({ itemId: shortid.generate() });
 		return (
@@ -74,14 +76,38 @@ registerBlockType("abhinash/accordion-item", {
 	},
 
 	save({ attributes }) {
+		const questionSchema = attributes.isMicrodataBased
+			? {
+					itemscope: "",
+					itemprop: "mainEntity",
+					itemtype: "https://schema.org/Question",
+			  }
+			: {};
+		const questionWrapper = attributes.isMicrodataBased
+			? { itemprop: "name" }
+			: {};
+		const answerSchema = attributes.isMicrodataBased
+			? {
+					itemscope: "",
+					itemprop: "acceptedAnswer",
+					itemtype: "https://schema.org/Answer",
+			  }
+			: {};
+		const answerWrapper = attributes.isMicrodataBased
+			? {
+					itemprop: "text",
+			  }
+			: {};
+
 		return (
-			<div className="card">
+			<div {...questionSchema} className="card">
 				<div className="card-header">
 					<h3
 						id={"head-" + attributes.itemId}
 						className="accordion-item-heading"
 					>
 						<button
+							{...questionWrapper}
 							className={
 								"accordion-toggle-btn btn btn-link " +
 								(!attributes.isExpanded ? "collapsed" : "")
@@ -97,12 +123,13 @@ registerBlockType("abhinash/accordion-item", {
 					</h3>
 				</div>
 				<div
+					{...answerSchema}
 					data-parent={"#" + attributes.containerId}
 					id={"content-" + attributes.itemId}
 					aria-labelledby={"head-" + attributes.itemId}
 					className={"collapse " + (attributes.isExpanded ? "show" : "")}
 				>
-					<div className="card-body">
+					<div {...answerWrapper} className="card-body">
 						<InnerBlocks.Content></InnerBlocks.Content>
 					</div>
 				</div>
