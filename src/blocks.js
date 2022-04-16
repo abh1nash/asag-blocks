@@ -20,3 +20,4 @@ import "./accordion";
 import "./guideForm";
 import "./tourModal";
 import "./contactForm";
+import "./carousel";
