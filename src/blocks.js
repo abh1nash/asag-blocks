@@ -22,3 +22,4 @@ import "./tourModal";
 import "./contactForm";
 import "./carousel";
 import "./consultationModal";
+import "./genericModal";
