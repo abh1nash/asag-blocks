@@ -21,3 +21,4 @@ import "./guideForm";
 import "./tourModal";
 import "./contactForm";
 import "./carousel";
+import "./consultationModal";
