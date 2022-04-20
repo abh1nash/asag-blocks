@@ -3,7 +3,7 @@
 /**
  * Plugin Name: ASAG Blocks
  * Plugin URI: http://abhinash.net/
- * Version: 1.0.0.19
+ * Version: 1.0.0.20
  * Description: Custom Gutenberg blocks for ASAG
  * Author: Abhinash Khatiwada
  * Author URI: https://abhinash.net/

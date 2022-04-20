@@ -39,10 +39,7 @@ registerBlockType("abhinash/consultation-modal", {
 				aria-hidden="true"
 				data-triggered-by={attributes.triggeredBy}
 			>
-				<div
-					className="modal-dialog modal-lg modal-dialog-centered"
-					role="document"
-				>
+				<div className="modal-dialog modal-dialog-centered" role="document">
 					<div className="modal-content">
 						<div className="modal-body">
 							<template x-if="status=='filling'">
