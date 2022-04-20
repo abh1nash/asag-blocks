@@ -79,7 +79,7 @@ registerBlockType("abhinash/consultation-modal", {
 												</div>
 											</div>
 											<div className="col-12 col-md-6 mt-2">
-												<strong>Preferrence for Contact</strong>
+												<strong>Preference for Contact</strong>
 												<div class="form-check">
 													<input
 														class="form-check-input"
@@ -91,7 +91,7 @@ registerBlockType("abhinash/consultation-modal", {
 														required
 													/>
 													<label class="form-check-label" for="phone-radio">
-														Phone
+														Phone Call
 													</label>
 												</div>
 												<div class="form-check">
@@ -102,10 +102,10 @@ registerBlockType("abhinash/consultation-modal", {
 														x-model="bookData.preference"
 														id="zoom-radio"
 														required
-														value="zoom"
+														value="video-meeting"
 													/>
 													<label class="form-check-label" for="zoom-radio">
-														Zoom
+														Video Meeting
 													</label>
 												</div>
 											</div>
