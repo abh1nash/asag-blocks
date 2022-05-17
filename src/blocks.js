@@ -23,3 +23,4 @@ import "./contactForm";
 import "./carousel";
 import "./consultationModal";
 import "./genericModal";
+import "./exitIntentModal";

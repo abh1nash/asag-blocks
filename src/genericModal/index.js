@@ -2,6 +2,8 @@ import { InspectorControls, InnerBlocks } from "@wordpress/block-editor";
 import { Panel, PanelRow, PanelBody, TextControl } from "@wordpress/components";
 import { registerBlockType } from "@wordpress/blocks";
 
+import "./modalCloseButton";
+
 registerBlockType("abhinash/generic-modal", {
 	title: "ASAG Generic Modal",
 	category: "asag-blocks",
